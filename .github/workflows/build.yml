@@ -14,12 +14,10 @@ jobs:
       - name: Unzip project
         run: unzip -q TOSIsland-Android.zip
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
-
-      - uses: android-actions/setup-android@v3
 
       - uses: gradle/actions/setup-gradle@v4
         with:
