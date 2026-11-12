@@ -13,377 +13,1351 @@ jobs:
 
       - name: Prepare project
         run: |
-          mkdir -p TOSIsland
-          for z in TOSIsland-Android.zip TOSIsland-v2.zip; do
-            if [ -f "$z" ]; then unzip -q -o "$z"; fi
-          done
-          rm -rf TOSIsland/app/src/main/java
-          base64 -d > /tmp/update.tgz <<'B64'
-          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
-          B64
-          tar xzf /tmp/update.tgz
+          rm -rf TOSIsland
+          mkdir -p "$(dirname 'TOSIsland/build.gradle.kts')"
+          cat > 'TOSIsland/build.gradle.kts' <<'TOSEOF'
+          plugins {
+              id("com.android.application") version "8.7.3" apply false
+              id("org.jetbrains.kotlin.android") version "2.0.21" apply false
+          }
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/gradle.properties')"
+          cat > 'TOSIsland/gradle.properties' <<'TOSEOF'
+          org.gradle.jvmargs=-Xmx2g
+          android.useAndroidX=true
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/gradle/wrapper/gradle-wrapper.properties')"
+          cat > 'TOSIsland/gradle/wrapper/gradle-wrapper.properties' <<'TOSEOF'
+          distributionUrl=https\://services.gradle.org/distributions/gradle-8.9-bin.zip
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/settings.gradle.kts')"
+          cat > 'TOSIsland/settings.gradle.kts' <<'TOSEOF'
+          pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }
+          dependencyResolutionManagement { repositories { google(); mavenCentral() } }
+          rootProject.name = "TOSIsland"
+          include(":app")
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/build.gradle.kts')"
+          cat > 'TOSIsland/app/build.gradle.kts' <<'TOSEOF'
+          plugins { id("com.android.application"); id("org.jetbrains.kotlin.android") }
+          android {
+              namespace = "com.tos.island"
+              compileSdk = 35
+              defaultConfig { applicationId = "com.tos.island"; minSdk = 26; targetSdk = 35; versionCode = 5; versionName = "3.2" }
+              buildTypes { release { isMinifyEnabled = false } }
+              compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
+              kotlinOptions { jvmTarget = "17" }
+          }
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/AndroidManifest.xml')"
+          cat > 'TOSIsland/app/src/main/AndroidManifest.xml' <<'TOSEOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+              <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+              <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+              <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
+              <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+              <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+              <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+              <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+              <application android:label="TOS Island" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
+                  <activity android:name=".MainActivity" android:exported="true">
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN"/>
+                          <category android:name="android.intent.category.LAUNCHER"/>
+                      </intent-filter>
+                  </activity>
+                  <service android:name=".IslandService" android:exported="false" android:foregroundServiceType="specialUse">
+                      <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="overlay"/>
+                  </service>
+                  <service android:name=".NotifService" android:exported="true" android:label="TOS Island"
+                      android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+                      <intent-filter><action android:name="android.service.notification.NotificationListenerService"/></intent-filter>
+                  </service>
+                  <receiver android:name=".BootReceiver" android:exported="true">
+                      <intent-filter>
+                          <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                          <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                      </intent-filter>
+                  </receiver>
+              </application>
+          </manifest>
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml')"
+          cat > 'TOSIsland/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml' <<'TOSEOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+              <background android:drawable="@color/ic_bg"/>
+              <foreground android:drawable="@drawable/ic_fg"/>
+          </adaptive-icon>
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml')"
+          cat > 'TOSIsland/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml' <<'TOSEOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+              <background android:drawable="@color/ic_bg"/>
+              <foreground android:drawable="@drawable/ic_fg"/>
+          </adaptive-icon>
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/res/values/colors.xml')"
+          cat > 'TOSIsland/app/src/main/res/values/colors.xml' <<'TOSEOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+              <color name="ic_bg">#05091C</color>
+          </resources>
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/java/com/tos/island/BootReceiver.kt')"
+          cat > 'TOSIsland/app/src/main/java/com/tos/island/BootReceiver.kt' <<'TOSEOF'
+          package com.tos.island
+
+          import android.content.BroadcastReceiver
+          import android.content.Context
+          import android.content.Intent
+          import android.provider.Settings
+
+          /** يعيد تشغيل الجزيرة بعد إقلاع الهاتف أو تحديث التطبيق (إن كان الخيار مفعّلًا). */
+          class BootReceiver : BroadcastReceiver() {
+              override fun onReceive(c: Context, i: Intent) {
+                  Prefs.init(c)
+                  if (!Prefs.auto) return
+                  if (!Settings.canDrawOverlays(c)) return
+                  try { c.startForegroundService(Intent(c, IslandService::class.java)) } catch (_: Throwable) {}
+              }
+          }
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/java/com/tos/island/ChatPanel.kt')"
+          cat > 'TOSIsland/app/src/main/java/com/tos/island/ChatPanel.kt' <<'TOSEOF'
+          package com.tos.island
+
+          import android.content.Context
+          import android.graphics.Color
+          import android.graphics.drawable.GradientDrawable
+          import android.text.TextUtils
+          import android.view.Gravity
+          import android.view.MotionEvent
+          import android.view.View
+          import android.view.inputmethod.EditorInfo
+          import android.view.inputmethod.InputMethodManager
+          import android.widget.*
+
+          /** لوحة الرد السريع: اسم المرسل + الرسالة + ردود جاهزة + حقل كتابة. */
+          class ChatPanel(c: Context) : LinearLayout(c) {
+              var onSend: ((String) -> Unit)? = null
+              var onClose: (() -> Unit)? = null
+              var onFocus: ((Boolean) -> Unit)? = null
+              private val d = resources.displayMetrics.density
+              private val name = TextView(c); private val msg = TextView(c); private val ed = EditText(c)
+              private val topRow = LinearLayout(c); private val gapSp = View(c); private val sendBtn = TextView(c)
+
+              private fun bg(col: Int, r: Float) = GradientDrawable().apply { setColor(col); cornerRadius = r * d; setStroke(maxOf(1, d.toInt()), 0x30A0B9FF) }
+
+              init {
+                  orientation = VERTICAL; layoutDirection = View.LAYOUT_DIRECTION_RTL
+                  setBackgroundColor(Color.BLACK); setPadding((16 * d).toInt(), 0, (16 * d).toInt(), (12 * d).toInt())
+                  // صف الترويسة: الاسم | فراغ للكاميرا | ✕  — لا شيء يُكتب في المنتصف
+                  topRow.gravity = Gravity.CENTER_VERTICAL
+                  name.setTextColor(Color.WHITE); name.textSize = 15f; name.setTypeface(null, android.graphics.Typeface.BOLD)
+                  name.maxLines = 1; name.ellipsize = TextUtils.TruncateAt.END
+                  topRow.addView(name, LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f))
+                  topRow.addView(gapSp, LayoutParams((Prefs.gap * d).toInt(), 1))
+                  val x = TextView(c).apply { text = "✕"; setTextColor(Color.WHITE); textSize = 16f; gravity = Gravity.END or Gravity.CENTER_VERTICAL
+                      setPadding((10 * d).toInt(), (10 * d).toInt(), (10 * d).toInt(), (10 * d).toInt()); setOnClickListener { onClose?.invoke() } }
+                  topRow.addView(x, LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f))
+                  addView(topRow, LayoutParams(-1, ((Prefs.idleH + 4) * d).toInt()))
+                  msg.setTextColor(0xCCFFFFFF.toInt()); msg.textSize = 13f; msg.maxLines = 3
+                  addView(msg, LayoutParams(-1, 0, 1f))
+                  val qr = LinearLayout(c)
+                  listOf("تمام 👍", "أنا في الطريق", "بعدين أكلمك").forEach { t ->
+                      qr.addView(TextView(c).apply { text = t; setTextColor(Color.WHITE); textSize = 12f; background = bg(0x22FFFFFF, 20f)
+                          setPadding((12 * d).toInt(), (6 * d).toInt(), (12 * d).toInt(), (6 * d).toInt()); setOnClickListener { onSend?.invoke(t) } },
+                          LayoutParams(-2, -2).apply { marginEnd = (6 * d).toInt() })
+                  }
+                  addView(qr, LayoutParams(-2, -2).apply { topMargin = (6 * d).toInt() })
+                  val row = LinearLayout(c).apply { gravity = Gravity.CENTER_VERTICAL }
+                  ed.hint = "اكتب ردك…"; ed.setTextColor(Color.WHITE); ed.setHintTextColor(0x88FFFFFF.toInt()); ed.textSize = 13f
+                  ed.setSingleLine(); ed.imeOptions = EditorInfo.IME_ACTION_SEND; ed.background = bg(0x22FFFFFF, 22f)
+                  ed.setPadding((14 * d).toInt(), (8 * d).toInt(), (14 * d).toInt(), (8 * d).toInt())
+                  ed.setOnTouchListener { _, e ->
+                      if (e.action == MotionEvent.ACTION_DOWN) { onFocus?.invoke(true)
+                          ed.postDelayed({ ed.requestFocus(); (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(ed, 0) }, 120) }
+                      false }
+                  ed.setOnEditorActionListener { _, _, _ -> send(); true }
+                  row.addView(ed, LayoutParams(0, (40 * d).toInt(), 1f))
+                  sendBtn.apply { text = "➤"; gravity = Gravity.CENTER; setTextColor(0xFF06202A.toInt()); textSize = 16f
+                      background = bg(Hub.accentColor, 20f); setOnClickListener { send() } }
+                  row.addView(sendBtn, LayoutParams((40 * d).toInt(), (40 * d).toInt()).apply { marginStart = (8 * d).toInt() })
+                  addView(row, LayoutParams(-1, -2).apply { topMargin = (8 * d).toInt() })
+              }
+
+              private fun send() { val t = ed.text.toString().trim(); if (t.isNotEmpty()) onSend?.invoke(t) }
+              fun bind(m: Hub.Msg) { name.text = m.sender; msg.text = m.text; ed.setText(""); sendBtn.background = bg(Hub.accentColor, 20f) }
+              /** يضبط ارتفاع الترويسة وفراغ الكاميرا حسب الإعدادات. */
+              fun relayout() {
+                  (topRow.layoutParams as LayoutParams).height = ((Prefs.idleH + 4) * d).toInt()
+                  (gapSp.layoutParams as LayoutParams).width = (Prefs.gap * d).toInt()
+                  topRow.requestLayout()
+              }
+              fun sent() {
+                  msg.text = "✓ تم الإرسال"; ed.setText("")
+                  (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(ed.windowToken, 0)
+              }
+          }
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/java/com/tos/island/GlowRing.kt')"
+          cat > 'TOSIsland/app/src/main/java/com/tos/island/GlowRing.kt' <<'TOSEOF'
+          package com.tos.island
+
+          import android.content.Context
+          import android.graphics.Canvas
+          import android.graphics.Matrix
+          import android.graphics.Paint
+          import android.graphics.RectF
+          import android.graphics.SweepGradient
+          import android.os.SystemClock
+          import android.view.View
+          import kotlin.math.max
+          import kotlin.math.min
+
+          /** إطار ألوان يدور حول الجزيرة كلها (يلمع أقوى عند اللمس). لا يعترض اللمس. */
+          class GlowRing(c: Context) : View(c) {
+              private val d = resources.displayMetrics.density
+              private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
+              private val rect = RectF()
+              private val mtx = Matrix()
+              private var sweep: SweepGradient? = null
+              private var sw = 0
+              private var sh = 0
+              private var flashT = 0L
+              /** يدور دائمًا (مثل وقت الموسيقى والرسائل) حتى لو أُطفئت حركة السكون. */
+              var lively = false
+              private val cols = intArrayOf(0xFF7FD6E4.toInt(), 0xFF8C86FF.toInt(), 0xFFFF7EB6.toInt(), 0xFFFFB26B.toInt(), 0xFF3DDC97.toInt(), 0xFF7FD6E4.toInt())
+
+              fun flash() { flashT = SystemClock.uptimeMillis(); invalidate() }
+
+              override fun onDraw(cv: Canvas) {
+                  val w = width.toFloat(); val h = height.toFloat()
+                  if (w < 2f || h < 2f) return
+                  if (sweep == null || sw != width || sh != height) {
+                      sweep = SweepGradient(w / 2f, h / 2f, cols, null); sw = width; sh = height
+                  }
+                  val now = SystemClock.uptimeMillis()
+                  val boost = if (flashT == 0L) 0f else (1f - (now - flashT) / 650f).coerceIn(0f, 1f)
+                  val moving = Prefs.idleAnim || lively || boost > 0f
+                  mtx.setRotate(if (moving) (now / 11f) % 360f else 0f, w / 2f, h / 2f)
+                  val sg = sweep
+                  sg?.setLocalMatrix(mtx)
+                  paint.shader = sg
+                  val line = (2f + 2.5f * boost) * d
+                  val r = max(1f, min(h / 2f, Prefs.radius * d) - line / 2f)
+                  rect.set(line / 2f, line / 2f, w - line / 2f, h - line / 2f)
+                  // توهج ناعم خلف الخط
+                  paint.strokeWidth = line * 2.4f; paint.alpha = (55 + 90 * boost).toInt().coerceIn(0, 255)
+                  cv.drawRoundRect(rect, r, r, paint)
+                  paint.strokeWidth = line; paint.alpha = ((if (moving) 215 else 80) + 40 * boost).toInt().coerceIn(0, 255)
+                  cv.drawRoundRect(rect, r, r, paint)
+                  if (moving) postInvalidateOnAnimation()
+              }
+          }
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/java/com/tos/island/Hub.kt')"
+          cat > 'TOSIsland/app/src/main/java/com/tos/island/Hub.kt' <<'TOSEOF'
+          package com.tos.island
+
+          import android.app.Notification
+          import android.app.RemoteInput
+          import android.content.Context
+          import android.content.Intent
+          import android.graphics.Bitmap
+          import android.graphics.Color
+          import android.media.session.MediaController
+          import android.os.Bundle
+          import android.os.Handler
+          import android.os.Looper
+          import android.os.SystemClock
+
+          /** الحالة المشتركة بين خدمة الإشعارات وواجهة الجزيرة. */
+          object Hub {
+              class Msg(val sender: String, val text: String, val action: Notification.Action, val key: String)
+
+              var title = ""; var artist = ""
+              var cover: Bitmap? = null; var accent: Int = 0xFF7FD6E4.toInt()
+              var playing = false; var pos = 0L; var dur = 0L; var stamp = 0L
+              var controller: MediaController? = null
+              var chat: Msg? = null
+              val bands = FloatArray(8); @Volatile var live = false
+              var onChange: (() -> Unit)? = null
+              /** تُستدعى عند تغيير إعدادات الحجم/الموضع لتُطبَّق فورًا. */
+              var onLayout: (() -> Unit)? = null
+              var expandCb: (() -> Unit)? = null
+              /** اللون المعروض: المختار من الإعدادات أو التلقائي من الغلاف. */
+              val accentColor: Int get() = if (Prefs.accent != 0) Prefs.accent else accent
+              /** حالة الخدمة + رسالة قصيرة تظهر في الكبسولة (للتأكد أن الجزيرة تعمل). */
+              @Volatile var running = false
+              var note: String? = null
+              var lastError: String? = null
+
+              fun updateCover(b: Bitmap?) {
+                  cover = b
+                  if (b != null) {
+                      val px = Bitmap.createScaledBitmap(b, 1, 1, true).getPixel(0, 0)
+                      val m = { v: Int -> (v * 0.7f + 76).toInt() }
+                      accent = Color.rgb(m(Color.red(px)), m(Color.green(px)), m(Color.blue(px)))
+                  } else accent = 0xFF7FD6E4.toInt()
+              }
+
+              /** رد حقيقي على إشعار الرسالة عبر RemoteInput. */
+              fun reply(ctx: Context, text: String) {
+                  val a = chat?.action ?: return
+                  val ris = a.remoteInputs ?: return
+                  val i = Intent(); val b = Bundle()
+                  ris.forEach { b.putCharSequence(it.resultKey, text) }
+                  RemoteInput.addResultsToIntent(ris, i, b)
+                  try { a.actionIntent.send(ctx, 0, i) } catch (_: Exception) {}
+              }
+
+              /** أغنية تجريبية لمعاينة اللوحة الموسّعة (تختفي بعد 15 ثانية). */
+              fun demoMusic() {
+                  title = "أغنية تجريبية"; artist = "TOS Island"; playing = true
+                  dur = 200000L; pos = 62000L; stamp = SystemClock.elapsedRealtime()
+                  onChange?.invoke()
+                  expandCb?.invoke()
+                  Handler(Looper.getMainLooper()).postDelayed({
+                      if (title == "أغنية تجريبية") { title = ""; artist = ""; playing = false; onChange?.invoke() }
+                  }, 15000)
+              }
+          }
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/java/com/tos/island/IslandService.kt')"
+          cat > 'TOSIsland/app/src/main/java/com/tos/island/IslandService.kt' <<'TOSEOF'
+          package com.tos.island
+
+          import android.Manifest
+          import android.app.*
+          import android.content.Intent
+          import android.content.pm.PackageManager
+          import android.content.pm.ServiceInfo
+          import android.graphics.PixelFormat
+          import android.media.audiofx.Visualizer
+          import android.os.Build
+          import android.os.IBinder
+          import android.view.Gravity
+          import android.view.WindowManager
+          import kotlin.math.hypot
+          import kotlin.math.pow
+
+          class IslandService : Service() {
+              private lateinit var wm: WindowManager
+              private lateinit var view: IslandView
+              private var viz: Visualizer? = null
+              private lateinit var lp: WindowManager.LayoutParams
+
+              override fun onBind(i: Intent?): IBinder? = null
+              override fun onStartCommand(i: Intent?, f: Int, id: Int) = START_STICKY
+
+              override fun onCreate() {
+                  super.onCreate()
+                  Hub.lastError = null
+                  try {
+                      Prefs.init(this)
+                      getSystemService(NotificationManager::class.java).createNotificationChannel(NotificationChannel("island", "Island", NotificationManager.IMPORTANCE_MIN))
+                      val n = Notification.Builder(this, "island").setContentTitle("TOS Island").setContentText("الجزيرة تعمل").setSmallIcon(android.R.drawable.ic_media_play).build()
+                      if (Build.VERSION.SDK_INT >= 34) startForeground(1, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE) else startForeground(1, n)
+                      wm = getSystemService(WINDOW_SERVICE) as WindowManager
+                      view = IslandView(this)
+                      val nf = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                      lp = WindowManager.LayoutParams(-2, -2, WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                          nf or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, PixelFormat.TRANSLUCENT)
+                      lp.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+                      lp.x = (Prefs.xoff * resources.displayMetrics.density).toInt()
+                      lp.y = (Prefs.top * resources.displayMetrics.density).toInt()
+                      // السماح بالرسم داخل منطقة الكاميرا (الثقب) في أعلى الشاشة
+                      if (Build.VERSION.SDK_INT >= 30) lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+                      else if (Build.VERSION.SDK_INT >= 28) lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+                      view.focusCb = { need -> lp.flags = if (need) lp.flags and nf.inv() else lp.flags or nf; wm.updateViewLayout(view, lp) }
+                      wm.addView(view, lp)
+                      Hub.onLayout = { applyLayout() }
+                      Hub.running = true
+                      Hub.note = "TOS 3.2 ✓"
+                      Hub.onChange?.invoke()
+                      startViz()
+                  } catch (t: Throwable) {
+                      Hub.running = false
+                      Hub.lastError = t.javaClass.simpleName + ": " + (t.message ?: "")
+                      stopSelf()
+                  }
+              }
+
+              /** يطبّق موضع الجزيرة وحجمها بعد تغيير الإعدادات. */
+              private fun applyLayout() {
+                  val dd = resources.displayMetrics.density
+                  lp.x = (Prefs.xoff * dd).toInt()
+                  lp.y = (Prefs.top * dd).toInt()
+                  try { wm.updateViewLayout(view, lp) } catch (_: Throwable) {}
+                  view.relayout()
+              }
+
+              private fun startViz() {
+                  if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) return
+                  try {
+                      viz = Visualizer(0).apply {
+                          enabled = false
+                          captureSize = Visualizer.getCaptureSizeRange()[1]
+                          setDataCaptureListener(object : Visualizer.OnDataCaptureListener {
+                              override fun onWaveFormDataCapture(v: Visualizer?, w: ByteArray?, r: Int) {}
+                              override fun onFftDataCapture(v: Visualizer?, f: ByteArray?, r: Int) {
+                                  if (f == null) return
+                                  for (k in 0..7) {
+                                      var s = 0f
+                                      for (i in 1 + k * 3..3 + k * 3) s += hypot(f[2 * i].toFloat(), f[2 * i + 1].toFloat())
+                                      Hub.bands[k] = (s / 3f / 90f).coerceIn(0f, 1f).pow(2.2f)
+                                  }
+                                  Hub.live = true
+                              }
+                          }, Visualizer.getMaxCaptureRate() / 2, false, true)
+                          enabled = true
+                      }
+                  } catch (_: Throwable) {}
+              }
+
+              override fun onDestroy() {
+                  Hub.running = false
+                  Hub.onChange = null
+                  Hub.onLayout = null
+                  Hub.expandCb = null
+                  try { viz?.release() } catch (_: Throwable) {}
+                  try { wm.removeView(view) } catch (_: Throwable) {}
+                  super.onDestroy()
+              }
+          }
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/java/com/tos/island/IslandView.kt')"
+          cat > 'TOSIsland/app/src/main/java/com/tos/island/IslandView.kt' <<'TOSEOF'
+          package com.tos.island
+
+          import android.animation.ValueAnimator
+          import android.content.Context
+          import android.graphics.Color
+          import android.graphics.Outline
+          import android.graphics.drawable.GradientDrawable
+          import android.os.Handler
+          import android.os.Looper
+          import android.view.View
+          import android.view.ViewOutlineProvider
+          import android.view.animation.OvershootInterpolator
+          import android.widget.FrameLayout
+          import kotlin.math.max
+          import kotlin.math.min
+
+          /** الجزيرة: كبسولة ساكنة ثابتة ← كبسولة نشطة ← موسيقى موسّعة ← رسالة مع رد. المنتصف محجوز للكاميرا. */
+          class IslandView(c: Context) : FrameLayout(c) {
+              enum class S { HIDDEN, IDLE, PILL, MUSIC, CHAT }
+              var state = S.HIDDEN
+              var focusCb: ((Boolean) -> Unit)? = null
+              private val d = resources.displayMetrics.density
+              private val box = FrameLayout(c)
+              private val music = MusicView(c)
+              private val chat = ChatPanel(c)
+              private val h = Handler(Looper.getMainLooper())
+              private val ringBg = GradientDrawable().apply { setColor(Color.TRANSPARENT); setStroke(max(1, d.toInt()), 0x40A0B9FF) }
+              private val ring = GlowRing(c)
+              private var noteActive = false
+              private var demoShown = false
+              private var cw = 0; private var chh = 0; private var shownKey = ""
+
+              init {
+                  addView(box, LayoutParams(0, 0))
+                  box.addView(music, LayoutParams(-1, -1)); box.addView(chat, LayoutParams(-1, -1))
+                  box.addView(ring, LayoutParams(-1, -1))
+                  box.setBackgroundColor(Color.BLACK); box.clipToOutline = true
+                  box.outlineProvider = object : ViewOutlineProvider() {
+                      override fun getOutline(v: View, o: Outline) { o.setRoundRect(0, 0, v.width, v.height, min(v.height / 2f, Prefs.radius * d)) } }
+                  box.visibility = GONE; chat.visibility = GONE
+                  music.onExpand = { set(S.MUSIC) }; music.onCollapse = { set(rest()) }
+                  music.onPress = { ring.flash(); box.animate().scaleX(0.94f).scaleY(0.94f).setDuration(90).start() }
+                  music.onRelease = { box.animate().scaleX(1f).scaleY(1f).setDuration(240).setInterpolator(OvershootInterpolator(2.2f)).start() }
+                  chat.onSend = { t -> Hub.reply(context, t); chat.sent(); h.postDelayed({ Hub.chat = null; set(rest()) }, 1400) }
+                  chat.onClose = { Hub.chat = null; set(rest()) }
+                  chat.onFocus = { focusCb?.invoke(it) }
+                  Hub.onChange = { h.post { update() } }
+                  Hub.expandCb = { h.post { demoShown = true; if (Hub.title.isNotEmpty()) set(S.MUSIC) } }
+                  h.post { set(rest()) }
+              }
+
+              private fun rest(): S =
+                  if (Hub.title.isNotEmpty() && Hub.playing) S.PILL else if (Prefs.always) S.IDLE else S.HIDDEN
+
+              private fun update() {
+                  val m = Hub.chat
+                  if (Hub.note != null && !noteActive && m == null) {
+                      noteActive = true; set(S.PILL)
+                      h.postDelayed({ Hub.note = null; noteActive = false; set(rest()); music.invalidate() }, 3200)
+                  }
+                  if (m != null && m.key != shownKey) {
+                      shownKey = m.key; chat.bind(m); set(S.CHAT)
+                      h.postDelayed({ if (state == S.CHAT && Hub.chat?.key == shownKey) { Hub.chat = null; set(rest()) } }, 9000)
+                  } else if ((state == S.HIDDEN || state == S.IDLE) && Hub.title.isNotEmpty() && Hub.playing) set(S.PILL)
+                  else if (state == S.PILL && Hub.note == null && (Hub.title.isEmpty() || !Hub.playing)) set(rest())
+                  else if (state == S.MUSIC && demoShown && Hub.title.isEmpty()) { demoShown = false; set(rest()) }
+                  music.invalidate()
+              }
+
+              /** يعيد حساب الحجم فورًا (عند تحريك الإعدادات). */
+              fun relayout() {
+                  val s = if (state == S.IDLE && !Prefs.always) S.HIDDEN else if (state == S.HIDDEN && Prefs.always) S.IDLE else state
+                  set(s, true)
+              }
+
+              fun set(s: S, force: Boolean = false) {
+                  if (!force && s == state && (box.visibility == VISIBLE) == (s != S.HIDDEN)) return
+                  state = s
+                  val dm = resources.displayMetrics
+                  val idleW = (Prefs.idleW * d).toInt(); val idleH = (Prefs.idleH * d).toInt()
+                  val gap = (Prefs.gap * d).toInt()
+                  val band = idleH + (4 * d).toInt()
+                  val maxW = min(dm.widthPixels - (16 * d).toInt(), (Prefs.expW * d).toInt())
+                  val zone = ((if (Hub.note != null) 96 else 64) * d).toInt()
+                  val pillW = min(maxW, max(idleW + (36 * d).toInt(), gap + 2 * zone))
+                  val (tw, th) = when (s) {
+                      S.HIDDEN -> 0 to 0
+                      S.IDLE -> idleW to idleH
+                      S.PILL -> pillW to idleH
+                      S.MUSIC -> maxW to (band + (172 * d).toInt())
+                      S.CHAT -> maxW to (band + (200 * d).toInt())
+                  }
+                  music.expanded = s == S.MUSIC
+                  ring.lively = s != S.IDLE
+                  music.idle = s == S.IDLE
+                  music.visibility = if (s == S.CHAT) GONE else VISIBLE
+                  chat.visibility = if (s == S.CHAT) VISIBLE else GONE
+                  chat.relayout()
+                  if (s != S.CHAT) focusCb?.invoke(false)
+                  if (s != S.HIDDEN) box.visibility = VISIBLE
+                  if (force) {
+                      val lp0 = box.layoutParams
+                      lp0.width = tw; lp0.height = th
+                      ringBg.cornerRadius = min(th / 2f, Prefs.radius * d)
+                      box.layoutParams = lp0; box.invalidateOutline()
+                      cw = tw; chh = th
+                      if (s == S.HIDDEN) box.visibility = GONE
+                      music.invalidate()
+                      return
+                  }
+                  val w0 = if (cw == 0) (tw * 0.6f).toInt() else cw; val h0 = if (chh == 0) (th * 0.6f).toInt() else chh
+                  ValueAnimator.ofFloat(0f, 1f).apply {
+                      duration = 420; interpolator = OvershootInterpolator(1.1f)
+                      addUpdateListener {
+                          val f = it.animatedValue as Float
+                          val lp = box.layoutParams
+                          lp.width = max(0, (w0 + (tw - w0) * f).toInt()); lp.height = max(0, (h0 + (th - h0) * f).toInt())
+                          ringBg.cornerRadius = min(lp.height / 2f, Prefs.radius * d); box.layoutParams = lp; box.invalidateOutline()
+                      }
+                      addListener(object : android.animation.AnimatorListenerAdapter() {
+                          override fun onAnimationEnd(a: android.animation.Animator) { cw = tw; chh = th; if (s == S.HIDDEN) box.visibility = GONE }
+                      })
+                      start()
+                  }
+                  music.invalidate()
+              }
+          }
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/java/com/tos/island/MainActivity.kt')"
+          cat > 'TOSIsland/app/src/main/java/com/tos/island/MainActivity.kt' <<'TOSEOF'
+          package com.tos.island
+
+          import android.Manifest
+          import android.app.Activity
+          import android.content.Context
+          import android.content.Intent
+          import android.content.res.ColorStateList
+          import android.graphics.Canvas
+          import android.graphics.Color
+          import android.graphics.Paint
+          import android.graphics.RadialGradient
+          import android.graphics.Shader
+          import android.graphics.Typeface
+          import android.graphics.drawable.GradientDrawable
+          import android.net.Uri
+          import android.os.Build
+          import android.os.Bundle
+          import android.os.Handler
+          import android.os.Looper
+          import android.os.PowerManager
+          import android.provider.Settings
+          import android.view.Gravity
+          import android.view.MotionEvent
+          import android.view.View
+          import android.widget.FrameLayout
+          import android.widget.LinearLayout
+          import android.widget.ScrollView
+          import android.widget.SeekBar
+          import android.widget.TextView
+
+          /** خلفية TOS: كحلي عميق + توهّج سماوي (أعلى) وبنفسجي (أسفل)، نفس شاشة الإطلاق في TOS v3. */
+          class Backdrop(c: Context) : View(c) {
+              private val p = Paint(Paint.ANTI_ALIAS_FLAG)
+              override fun onDraw(cv: Canvas) {
+                  val w = width.toFloat(); val h = height.toFloat()
+                  cv.drawColor(0xFF070B14.toInt())
+                  val r = 340f * resources.displayMetrics.density
+                  p.shader = RadialGradient(0f, 0f, r, 0x617FD6E4, 0x007FD6E4, Shader.TileMode.CLAMP)
+                  cv.drawCircle(0f, 0f, r, p)
+                  p.shader = RadialGradient(w, h, r, 0x668C86FF, 0x008C86FF, Shader.TileMode.CLAMP)
+                  cv.drawCircle(w, h, r, p)
+              }
+          }
+
+          /** شعار TOS الصغير: حلقة سماوية + نقطة. */
+          class Mark(c: Context) : View(c) {
+              private val p = Paint(Paint.ANTI_ALIAS_FLAG)
+              override fun onDraw(cv: Canvas) {
+                  val s = width.toFloat(); val u = s / 32f
+                  p.style = Paint.Style.STROKE; p.strokeWidth = 5 * u; p.color = 0xFF7FD6E4.toInt(); p.alpha = 178
+                  cv.drawCircle(s / 2, s / 2, 11 * u, p)
+                  p.style = Paint.Style.FILL; p.alpha = 255
+                  cv.drawCircle(s / 2, s / 2, 3 * u, p)
+              }
+          }
+
+          class MainActivity : Activity() {
+              private val bgc = 0xFF070B14.toInt()
+              private val panel = 0xF70D1024.toInt()
+              private val ink = 0xFFEAF2FF.toInt()
+              private val mute = 0xFFB8C6DE.toInt()
+              private val cyan = 0xFF7FD6E4.toInt()
+              private val dark = 0xFF06202A.toInt()
+              private val okc = 0xFF3DDC97.toInt()
+              private val badc = 0xFFFF6B7A.toInt()
+              private val line = 0x40A0B9FF
+
+              private class Row(val badge: TextView, val num: String, val act: TextView, val ok: () -> Boolean)
+
+              private var d = 1f
+              private val rows = ArrayList<Row>()
+              private val refreshers = ArrayList<() -> Unit>()
+              private val ui = Handler(Looper.getMainLooper())
+              private lateinit var svcDot: View
+              private lateinit var svc: TextView
+              private lateinit var info: TextView
+              private lateinit var permTitle: TextView
+              private lateinit var startBtn: TextView
+
+              private fun dp(v: Int) = (v * d).toInt()
+
+              private fun glass(fill: Int, r: Int, stroke: Int = 0): GradientDrawable {
+                  val g = GradientDrawable()
+                  g.setColor(fill); g.cornerRadius = r * d
+                  if (stroke != 0) g.setStroke(maxOf(1, d.toInt()), stroke)
+                  return g
+              }
+
+              private fun oval(col: Int, ring: Boolean = false): GradientDrawable {
+                  val g = GradientDrawable()
+                  g.setShape(GradientDrawable.OVAL); g.setColor(col)
+                  if (ring) g.setStroke(dp(3), Color.WHITE)
+                  return g
+              }
+
+              private fun txt(t: String, size: Float, color: Int, bold: Boolean = false): TextView {
+                  val v = TextView(this)
+                  v.text = t; v.textSize = size; v.setTextColor(color)
+                  if (bold) v.typeface = Typeface.DEFAULT_BOLD
+                  return v
+              }
+
+              private fun top(m: Int) = LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(m) }
+
+              private fun styleBtn(v: TextView, primary: Boolean) {
+                  v.textSize = if (primary) 16f else 14f
+                  v.setTextColor(if (primary) dark else ink)
+                  v.background = if (primary) glass(cyan, 99) else glass(0x14FFFFFF, 99, 0x33FFFFFF)
+              }
+
+              private fun button(t: String, primary: Boolean, onClick: () -> Unit): TextView {
+                  val v = txt(t, 14f, ink, true)
+                  v.gravity = Gravity.CENTER
+                  styleBtn(v, primary)
+                  v.setOnClickListener { onClick() }
+                  v.setOnTouchListener { x, e ->
+                      if (e.action == MotionEvent.ACTION_DOWN) x.alpha = 0.7f
+                      else if (e.action == MotionEvent.ACTION_UP || e.action == MotionEvent.ACTION_CANCEL) x.alpha = 1f
+                      false
+                  }
+                  return v
+              }
+
+              private fun card(): LinearLayout {
+                  val c = LinearLayout(this)
+                  c.orientation = LinearLayout.VERTICAL
+                  c.background = glass(panel, 26, line)
+                  c.setPadding(dp(18), dp(16), dp(18), dp(16))
+                  return c
+              }
+
+              private fun stepHead(num: String, title: String): TextView {
+                  val v = txt("$num  ·  $title", 15f, ink, true)
+                  return v
+              }
+
+              private fun addStep(card: LinearLayout, num: String, label: String, hint: String, ok: () -> Boolean, go: () -> Unit) {
+                  val r = LinearLayout(this)
+                  r.gravity = Gravity.CENTER_VERTICAL
+                  r.setPadding(0, dp(8), 0, dp(8))
+                  r.setOnClickListener { go() }
+                  val badge = txt(num, 13f, ink, true)
+                  badge.gravity = Gravity.CENTER
+                  r.addView(badge, LinearLayout.LayoutParams(dp(30), dp(30)))
+                  val col = LinearLayout(this)
+                  col.orientation = LinearLayout.VERTICAL
+                  col.addView(txt(label, 14f, ink, true))
+                  col.addView(txt(hint, 11f, mute), top(2))
+                  r.addView(col, LinearLayout.LayoutParams(0, -2, 1f).apply { marginStart = dp(12) })
+                  val act = txt("تفعيل", 12f, dark, true)
+                  act.gravity = Gravity.CENTER
+                  act.setPadding(dp(14), dp(7), dp(14), dp(7))
+                  act.background = glass(cyan, 99)
+                  r.addView(act)
+                  card.addView(r, top(8))
+                  rows.add(Row(badge, num, act, ok))
+              }
+
+              private fun slider(card: LinearLayout, label: String, lo: Int, hi: Int, get: () -> Int, put: (Int) -> Unit) {
+                  val head = LinearLayout(this)
+                  head.gravity = Gravity.CENTER_VERTICAL
+                  head.addView(txt(label, 13f, ink), LinearLayout.LayoutParams(0, -2, 1f))
+                  val vt = txt("", 12f, cyan, true)
+                  head.addView(vt)
+                  card.addView(head, top(16))
+                  val sb = SeekBar(this)
+                  sb.max = hi - lo
+                  sb.progressTintList = ColorStateList.valueOf(cyan)
+                  sb.thumbTintList = ColorStateList.valueOf(cyan)
+                  sb.progressBackgroundTintList = ColorStateList.valueOf(0x33FFFFFF)
+                  card.addView(sb, top(2))
+                  val show: () -> Unit = {
+                      vt.text = "${get()} dp"
+                      sb.progress = get() - lo
+                  }
+                  show()
+                  sb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                      override fun onProgressChanged(s: SeekBar?, p: Int, user: Boolean) {
+                          if (!user) return
+                          put(p + lo)
+                          vt.text = "${p + lo} dp"
+                          Hub.onLayout?.invoke()
+                      }
+                      override fun onStartTrackingTouch(s: SeekBar?) {}
+                      override fun onStopTrackingTouch(s: SeekBar?) {}
+                  })
+                  refreshers.add(show)
+              }
+
+              private fun toggle(card: LinearLayout, label: String, hint: String, get: () -> Boolean, put: (Boolean) -> Unit) {
+                  val r = LinearLayout(this)
+                  r.gravity = Gravity.CENTER_VERTICAL
+                  val col = LinearLayout(this)
+                  col.orientation = LinearLayout.VERTICAL
+                  col.addView(txt(label, 14f, ink, true))
+                  col.addView(txt(hint, 11f, mute), top(2))
+                  r.addView(col, LinearLayout.LayoutParams(0, -2, 1f))
+                  val chip = txt("", 12f, dark, true)
+                  chip.gravity = Gravity.CENTER
+                  chip.setPadding(dp(14), dp(7), dp(14), dp(7))
+                  val show: () -> Unit = {
+                      val on = get()
+                      chip.text = if (on) "مفعّل" else "متوقف"
+                      chip.setTextColor(if (on) dark else ink)
+                      chip.background = if (on) glass(cyan, 99) else glass(0x14FFFFFF, 99, 0x33FFFFFF)
+                  }
+                  show()
+                  chip.setOnClickListener {
+                      put(!get())
+                      show()
+                      Hub.onLayout?.invoke()
+                      Hub.onChange?.invoke()
+                  }
+                  r.addView(chip)
+                  card.addView(r, top(16))
+                  refreshers.add(show)
+              }
+
+              private fun accents(card: LinearLayout) {
+                  card.addView(txt("لون التمييز", 13f, ink), top(18))
+                  val row = LinearLayout(this)
+                  row.gravity = Gravity.CENTER_VERTICAL
+                  val cols = intArrayOf(0xFF7FD6E4.toInt(), 0xFF8C86FF.toInt(), 0xFFFF7EB6.toInt(), 0xFF3DDC97.toInt(), 0xFFFFB26B.toInt())
+                  val auto = txt("تلقائي", 12f, ink, true)
+                  auto.gravity = Gravity.CENTER
+                  auto.setPadding(dp(14), dp(7), dp(14), dp(7))
+                  row.addView(auto, LinearLayout.LayoutParams(-2, -2).apply { marginEnd = dp(10) })
+                  val dots = ArrayList<View>()
+                  for (c in cols) {
+                      val v = View(this)
+                      dots.add(v)
+                      row.addView(v, LinearLayout.LayoutParams(dp(32), dp(32)).apply { marginEnd = dp(10) })
+                  }
+                  val show: () -> Unit = {
+                      val a = Prefs.accent
+                      auto.background = if (a == 0) glass(cyan, 99) else glass(0x14FFFFFF, 99, 0x33FFFFFF)
+                      auto.setTextColor(if (a == 0) dark else ink)
+                      for (i in cols.indices) dots[i].background = oval(cols[i], a == cols[i])
+                  }
+                  show()
+                  auto.setOnClickListener { Prefs.accent = 0; show(); Hub.onChange?.invoke() }
+                  for (i in cols.indices) dots[i].setOnClickListener { Prefs.accent = cols[i]; show(); Hub.onChange?.invoke() }
+                  card.addView(row, top(10))
+                  refreshers.add(show)
+              }
+
+              private fun msg(t: String, bad: Boolean) {
+                  info.text = t
+                  info.setTextColor(if (bad) badc else mute)
+              }
+
+              private fun notifListenerOn() =
+                  Settings.Secure.getString(contentResolver, "enabled_notification_listeners")?.contains(packageName) == true
+
+              private fun batteryOk(): Boolean =
+                  try { getSystemService(PowerManager::class.java).isIgnoringBatteryOptimizations(packageName) } catch (_: Throwable) { false }
+
+              private fun startIsland() {
+                  if (!Settings.canDrawOverlays(this)) { msg("فعّل «العرض فوق التطبيقات» من الخطوة 1 أولًا.", true); return }
+                  Hub.lastError = null
+                  try {
+                      startForegroundService(Intent(this, IslandService::class.java))
+                      msg(if (notifListenerOn()) "جارٍ التشغيل… ستظهر الجزيرة أعلى الشاشة." else "جارٍ التشغيل. لتظهر الموسيقى والرسائل فعّل «قراءة الإشعارات».", false)
+                  } catch (t: Throwable) {
+                      Hub.lastError = t.javaClass.simpleName + ": " + (t.message ?: "")
+                  }
+                  ui.postDelayed({ refresh() }, 800)
+              }
+
+              override fun onCreate(b: Bundle?) {
+                  super.onCreate(b)
+                  Prefs.init(this)
+                  d = resources.displayMetrics.density
+                  window.statusBarColor = bgc
+                  window.navigationBarColor = bgc
+
+                  val frame = FrameLayout(this)
+                  frame.layoutDirection = View.LAYOUT_DIRECTION_RTL
+                  frame.addView(Backdrop(this), FrameLayout.LayoutParams(-1, -1))
+                  val scroll = ScrollView(this)
+                  scroll.isFillViewport = true
+                  frame.addView(scroll, FrameLayout.LayoutParams(-1, -1))
+                  frame.setOnApplyWindowInsetsListener { _, ins ->
+                      scroll.setPadding(0, ins.systemWindowInsetTop, 0, ins.systemWindowInsetBottom)
+                      ins
+                  }
+
+                  val col = LinearLayout(this)
+                  col.orientation = LinearLayout.VERTICAL
+                  col.setPadding(dp(18), dp(24), dp(18), dp(32))
+                  scroll.addView(col, FrameLayout.LayoutParams(-1, -2))
+
+                  // الترويسة
+                  val head = LinearLayout(this)
+                  head.gravity = Gravity.CENTER_VERTICAL
+                  head.addView(Mark(this), LinearLayout.LayoutParams(dp(34), dp(34)))
+                  head.addView(txt("TOS", 24f, ink, true), LinearLayout.LayoutParams(-2, -2).apply { marginStart = dp(10) })
+                  val chip = txt("Island 3.2", 11f, dark, true)
+                  chip.background = glass(cyan, 99)
+                  chip.setPadding(dp(10), dp(2), dp(10), dp(2))
+                  head.addView(chip, LinearLayout.LayoutParams(-2, -2).apply { marginStart = dp(8) })
+                  col.addView(head, LinearLayout.LayoutParams(-1, -2))
+                  col.addView(txt("جزيرة تفاعلية للموسيقى والرسائل. اتبع الخطوات بالترتيب.", 13f, mute), top(8))
+
+                  // الخطوة 1: الأذونات
+                  val perms = card()
+                  permTitle = stepHead("الخطوة 1", "الأذونات")
+                  perms.addView(permTitle)
+                  addStep(perms, "1", "العرض فوق التطبيقات", "لتظهر الجزيرة أعلى الشاشة", { Settings.canDrawOverlays(this) }) {
+                      startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
+                  }
+                  addStep(perms, "2", "قراءة الإشعارات", "لعرض الموسيقى وغلافها والرد على الرسائل", { notifListenerOn() }) {
+                      startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                  }
+                  addStep(perms, "3", "الصوت والإشعارات", "لموجة الموسيقى التفاعلية", { checkSelfPermission(Manifest.permission.RECORD_AUDIO) == 0 }) {
+                      val p = if (Build.VERSION.SDK_INT >= 33) arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.POST_NOTIFICATIONS) else arrayOf(Manifest.permission.RECORD_AUDIO)
+                      requestPermissions(p, 1)
+                  }
+                  addStep(perms, "4", "البطارية بلا قيود", "حتى لا يُغلق التطبيق في الخلفية (مهم في سامسونغ)", { batteryOk() }) {
+                      startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+                  }
+                  col.addView(perms, top(20))
+
+                  // الخطوة 2: التشغيل
+                  val run = card()
+                  run.addView(stepHead("الخطوة 2", "التشغيل"))
+                  val st = LinearLayout(this)
+                  st.gravity = Gravity.CENTER_VERTICAL
+                  svcDot = View(this)
+                  st.addView(svcDot, LinearLayout.LayoutParams(dp(10), dp(10)))
+                  svc = txt("", 14f, ink, true)
+                  st.addView(svc, LinearLayout.LayoutParams(0, -2, 1f).apply { marginStart = dp(10) })
+                  run.addView(st, top(12))
+                  startBtn = button("تشغيل الجزيرة", true) {
+                      if (Hub.running) {
+                          stopService(Intent(this, IslandService::class.java))
+                          ui.postDelayed({ refresh() }, 600)
+                      } else startIsland()
+                  }
+                  run.addView(startBtn, LinearLayout.LayoutParams(-1, dp(54)).apply { topMargin = dp(14) })
+                  val two = LinearLayout(this)
+                  val t1 = button("تجربة الإشعار", false) {
+                      if (!Hub.running) msg("شغّل الجزيرة أولًا.", true)
+                      else { Hub.note = "الجزيرة تعمل ✓"; Hub.onChange?.invoke(); msg("انظر إلى أعلى الشاشة.", false) }
+                  }
+                  val t2 = button("تجربة الموسيقى", false) {
+                      if (!Hub.running) msg("شغّل الجزيرة أولًا.", true)
+                      else { Hub.demoMusic(); msg("تظهر لوحة الموسيقى لمدة 15 ثانية.", false) }
+                  }
+                  two.addView(t1, LinearLayout.LayoutParams(0, dp(46), 1f))
+                  two.addView(t2, LinearLayout.LayoutParams(0, dp(46), 1f).apply { marginStart = dp(10) })
+                  run.addView(two, top(10))
+                  info = txt("", 12f, mute)
+                  info.gravity = Gravity.CENTER
+                  run.addView(info, top(12))
+                  col.addView(run, top(14))
+
+                  // الخطوة 3: الحجم والموضع
+                  val look = card()
+                  look.addView(stepHead("الخطوة 3", "الحجم والموضع"))
+                  look.addView(txt("تتغير الجزيرة أمامك مباشرة أثناء التحريك.", 11f, mute), top(4))
+                  slider(look, "عرض الجزيرة", 70, 220, { Prefs.idleW }, { Prefs.idleW = it })
+                  slider(look, "ارتفاع الجزيرة", 22, 56, { Prefs.idleH }, { Prefs.idleH = it })
+                  slider(look, "المسافة من أعلى الشاشة", 0, 40, { Prefs.top }, { Prefs.top = it })
+                  slider(look, "الإزاحة الأفقية (يمين/يسار)", -80, 80, { Prefs.xoff }, { Prefs.xoff = it })
+                  slider(look, "فراغ الكاميرا في المنتصف", 0, 120, { Prefs.gap }, { Prefs.gap = it })
+                  slider(look, "عرض لوحة الموسيقى والرد", 260, 400, { Prefs.expW }, { Prefs.expW = it })
+                  slider(look, "استدارة الزوايا", 8, 40, { Prefs.radius }, { Prefs.radius = it })
+                  col.addView(look, top(14))
+
+                  // الخطوة 4: الخيارات
+                  val opt = card()
+                  opt.addView(stepHead("الخطوة 4", "الخيارات"))
+                  toggle(opt, "إبقاء الجزيرة ظاهرة دائمًا", "تبقى كبسولة ثابتة أعلى الشاشة حتى بلا موسيقى", { Prefs.always }, { Prefs.always = it })
+                  toggle(opt, "رسالة تشخيص عند اللمس", "تظهر عبارة «لمسة ✓» عند لمس الجزيرة للتأكد أن اللمس يصل", { Prefs.diag }, { Prefs.diag = it })
+                  toggle(opt, "حركة الألوان أثناء السكون", "ألوان متحركة على الكبسولة حين لا تعمل موسيقى", { Prefs.idleAnim }, { Prefs.idleAnim = it })
+                  toggle(opt, "التشغيل التلقائي", "تعمل الجزيرة بعد إعادة تشغيل الهاتف وبعد التحديث", { Prefs.auto }, { Prefs.auto = it })
+                  accents(opt)
+                  val reset = button("استعادة الإعدادات الافتراضية", false) {
+                      Prefs.reset()
+                      for (f in refreshers) f()
+                      Hub.onLayout?.invoke()
+                      Hub.onChange?.invoke()
+                  }
+                  opt.addView(reset, LinearLayout.LayoutParams(-1, dp(46)).apply { topMargin = dp(20) })
+                  col.addView(opt, top(14))
+
+                  setContentView(frame)
+                  refresh()
+              }
+
+              override fun onResume() { super.onResume(); refresh() }
+
+              override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+                  super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+                  refresh()
+              }
+
+              private fun refresh() {
+                  var done = 0
+                  for (r in rows) {
+                      val ok = r.ok()
+                      if (ok) done++
+                      r.badge.text = if (ok) "✓" else r.num
+                      r.badge.setTextColor(if (ok) dark else ink)
+                      r.badge.background = oval(if (ok) okc else 0x26FFFFFF)
+                      r.act.visibility = if (ok) View.GONE else View.VISIBLE
+                  }
+                  permTitle.text = "الخطوة 1  ·  الأذونات ($done/${rows.size})"
+                  val run = Hub.running
+                  svcDot.background = oval(if (run) okc else mute)
+                  svc.text = if (run) "الجزيرة تعمل" else "الجزيرة متوقفة"
+                  startBtn.text = if (run) "إيقاف الجزيرة" else "تشغيل الجزيرة"
+                  styleBtn(startBtn, !run)
+                  val e = Hub.lastError
+                  if (e != null) msg("تعذّر التشغيل: " + e, true)
+              }
+          }
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/java/com/tos/island/MusicView.kt')"
+          cat > 'TOSIsland/app/src/main/java/com/tos/island/MusicView.kt' <<'TOSEOF'
+          package com.tos.island
+
+          import android.content.Context
+          import android.graphics.*
+          import android.os.SystemClock
+          import android.view.MotionEvent
+          import android.view.View
+          import kotlin.math.*
+
+          /** مشغّل الموسيقى: غلاف كخلفية + موجة تفاعلية على شريط التقدم (نفس تصميم الفيديو). */
+          class MusicView(c: Context) : View(c) {
+              var expanded = false
+              var idle = false
+              var onPress: (() -> Unit)? = null
+              var onRelease: (() -> Unit)? = null
+              private var pulse = 0L
+              var onCollapse: (() -> Unit)? = null
+              var onExpand: (() -> Unit)? = null
+              private val d = resources.displayMetrics.density
+              private val p = Paint(Paint.ANTI_ALIAS_FLAG)
+              private val add = Paint(Paint.ANTI_ALIAS_FLAG).apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.ADD) }
+              private val path = Path()
+              private val B = FloatArray(8)
+              private val btn = Array(5) { RectF() }
+              private var drag = -1f
+              private var liked = false
+              private val offs = floatArrayOf(0f, 1.7f, 3.1f)
+
+              private fun ci(a: Float, b: Float, f: Float) = a + (b - a) * (1 - cos(f * PI.toFloat())) / 2f
+              /** قوة وميض اللمس: 1 عند الضغط وتتلاشى خلال أقل من ثانية. */
+              private fun pulseK(): Float {
+                  if (pulse == 0L) return 0f
+                  return (1f - (SystemClock.uptimeMillis() - pulse) / 700f).coerceIn(0f, 1f)
+              }
+
+              private val palette = intArrayOf(0xFF7FD6E4.toInt(), 0xFF8C86FF.toInt(), 0xFFFF7EB6.toInt(), 0xFF3DDC97.toInt())
+
+              /** الكبسولة الساكنة: توهج على جانب + أعمدة ملوّنة على الجانب الآخر، والمنتصف فارغ للكاميرا. */
+              private fun idleDraw(cv: Canvas, w: Float, h: Float, acc: Int) {
+                  val t = SystemClock.uptimeMillis().toFloat()
+                  val k = pulseK()
+                  val gap = Prefs.gap * d
+                  val zone = max(14 * d, (w - gap) / 2f)
+                  val lc = zone / 2f; val rc = w - zone / 2f; val cy = h / 2
+                  val moving = Prefs.idleAnim || k > 0f
+                  val tt = if (moving) t else 0f
+                  // توهج نابض على اليسار
+                  val sn = 0.5f + 0.5f * sin(tt / 500f)
+                  p.style = Paint.Style.FILL; p.color = acc; p.alpha = (50 + 110 * sn + 90 * k).toInt().coerceIn(0, 255)
+                  cv.drawCircle(lc, cy, (5 + 3 * sn + 4 * k) * d, p)
+                  p.alpha = 255; cv.drawCircle(lc, cy, 2.6f * d, p)
+                  // أعمدة ملوّنة تتحرك على اليمين
+                  for (i in 0..3) {
+                      val v = 0.15f + 0.4f * abs(sin(tt / 650f + i * 1.3f)) + 0.35f * k
+                      val bar = 3 * d + max(2f, h - 18 * d) * v
+                      val bx = rc + (i - 1.5f) * 6 * d
+                      p.color = palette[i]; p.alpha = 255
+                      cv.drawRoundRect(bx - 1.5f * d, cy - bar / 2, bx + 1.5f * d, cy + bar / 2, 2 * d, 2 * d, p)
+                  }
+              }
+
+              private fun fit(s: String, maxW: Float): String {
+                  if (p.measureText(s) <= maxW) return s
+                  var n = s.length
+                  while (n > 1 && p.measureText(s.substring(0, n) + "…") > maxW) n--
+                  return s.substring(0, n) + "…"
+              }
+              private fun fmt(ms: Long): String { val s = ms / 1000; return "%d:%02d".format(s / 60, s % 60) }
+
+              override fun onDraw(cv: Canvas) {
+                  val w = width.toFloat(); val h = height.toFloat(); val t = SystemClock.uptimeMillis().toFloat()
+                  val real = Hub.live && Hub.bands.sum() > 0.03f
+                  for (k in 0..7) {
+                      val v = if (real) Hub.bands[k] else if (Hub.playing) 0.2f + 0.6f * abs(sin(t / 430f + k * 1.7f)) else if (expanded && Hub.title.isEmpty()) 0.15f + 0.4f * abs(sin(t / 600f + k * 1.7f)) else 0.05f
+                      B[k] += (v - B[k]) * 0.35f
+                  }
+                  val acc = Hub.accentColor
+                  cv.drawColor(Color.BLACK)
+                  if (!expanded) {
+                      if (idle) { idleDraw(cv, w, h, acc); if (Prefs.idleAnim || pulseK() > 0f) postInvalidateOnAnimation() }
+                      else { pill(cv, w, h, acc); if (Hub.playing || pulseK() > 0f) postInvalidateOnAnimation() }
+                      return
+                  }
+
+                  val bass = (B[0] + B[1]) / 2
+                  val cover = Hub.cover
+                  if (cover != null) {
+                      val s = max(w / cover.width, h / cover.height) * (1.05f + bass * 0.09f)
+                      cv.save(); cv.translate(w / 2, h / 2); cv.scale(s, s)
+                      cv.drawBitmap(cover, -cover.width / 2f, -cover.height / 2f, null); cv.restore()
+                  } else {
+                      p.shader = LinearGradient(0f, 0f, w, h, acc, 0xFF0D1024.toInt(), Shader.TileMode.CLAMP)
+                      cv.drawRect(0f, 0f, w, h, p); p.shader = null
+                  }
+                  p.shader = LinearGradient(0f, 0f, 0f, h, 0x59000000, 0xB8000000.toInt(), Shader.TileMode.CLAMP)
+                  cv.drawRect(0f, 0f, w, h, p); p.shader = null
+
+                  val band = (Prefs.idleH + 4) * d
+                  val pad = 18 * d
+                  // الترويسة: يبقى منتصفها فارغًا لأن الكاميرا هناك
+                  p.style = Paint.Style.FILL; p.color = Color.WHITE; p.alpha = 200; p.textSize = 11 * d; p.isFakeBoldText = false
+                  p.textAlign = Paint.Align.LEFT; cv.drawText("هذا الهاتف", pad, band / 2 + 4 * d, p)
+                  val xc = w - pad - 8 * d
+                  btn[4].set(xc - 22 * d, band / 2 - 20 * d, xc + 22 * d, band / 2 + 20 * d)
+                  icon(cv, 4, xc, band / 2, acc)
+
+                  // العنوان والفنان تحت منطقة الكاميرا
+                  p.style = Paint.Style.FILL; p.color = Color.WHITE; p.alpha = 255; p.textSize = 15 * d; p.isFakeBoldText = true
+                  val ttl = if (Hub.title.isEmpty()) "لا توجد موسيقى الآن" else Hub.title
+                  val tw = p.measureText(ttl); val aw = w - 2 * pad
+                  cv.save(); cv.clipRect(pad, band + 2 * d, w - pad, band + 26 * d)
+                  if (tw <= aw) { p.textAlign = Paint.Align.CENTER; cv.drawText(ttl, w / 2, band + 20 * d, p) }
+                  else { val gp = 40 * d; val off = (t / 25f) % (tw + gp); p.textAlign = Paint.Align.LEFT
+                      cv.drawText(ttl, pad - off, band + 20 * d, p); cv.drawText(ttl, pad - off + tw + gp, band + 20 * d, p) }
+                  cv.restore(); p.isFakeBoldText = false
+                  val sub = if (Hub.title.isEmpty()) "شغّل أي أغنية وستظهر هنا" else Hub.artist
+                  if (sub.isNotEmpty()) {
+                      p.alpha = 190; p.textSize = 12 * d; p.textAlign = Paint.Align.CENTER
+                      cv.drawText(fit(sub, aw), w / 2, band + 40 * d, p)
+                  }
+
+                  // ---- شريط التقدم + الموجة ----
+                  val m = band + 76 * d; val x0 = pad; val x1 = w - pad
+                  val pos = if (drag >= 0) (drag * Hub.dur).toLong() else Hub.pos + (if (Hub.playing) SystemClock.elapsedRealtime() - Hub.stamp else 0L)
+                  val fr = if (Hub.dur > 0) (pos.toFloat() / Hub.dur).coerceIn(0f, 1f) else if (Hub.title.isEmpty()) 1f else 0f
+                  val px = x0 + (x1 - x0) * fr
+                  p.style = Paint.Style.STROKE; p.strokeCap = Paint.Cap.ROUND; p.strokeWidth = 5 * d
+                  p.color = Color.WHITE; p.alpha = 82; cv.drawLine(px, m, x1, m, p)
+                  val len = px - x0
+                  if (len > 8 * d) {
+                      val cols = intArrayOf(acc, Color.WHITE, acc); val als = floatArrayOf(.55f, .3f, .5f); val ks = floatArrayOf(1f, .8f, .62f)
+                      for (q in 0..2) {
+                          val xs = ArrayList<Float>(); val ys = ArrayList<Float>()
+                          var xx = 0f
+                          while (xx <= len) {
+                              val env = sin(PI.toFloat() * min(xx / len, 1f)).pow(.7f)
+                              val pos2 = xx / (55 * d) + t / (800f + q * 350f) + offs[q]
+                              val i0 = floor(pos2).toInt(); val f = pos2 - i0
+                              val v = ci(B[((i0 % 8) + 8) % 8], B[(((i0 + 1) % 8) + 8) % 8], f)
+                              val amp = if (Hub.playing || Hub.title.isEmpty()) env * ks[q] * (1 + 14 * v * (.45f + .55f * abs(sin(xx / d * .075f + t / 330f + q * 2.1f)))) else 0f
+                              xs.add(x0 + xx); ys.add(m - 2 * d - amp * d); xx += 6 * d
+                          }
+                          path.reset(); path.moveTo(x0, m); path.lineTo(xs[0], ys[0])
+                          for (a in 0 until xs.size - 1) path.quadTo(xs[a], ys[a], (xs[a] + xs[a + 1]) / 2, (ys[a] + ys[a + 1]) / 2)
+                          path.lineTo(px, m); path.close()
+                          add.style = Paint.Style.FILL; add.color = cols[q]; add.alpha = (als[q] * 255).toInt(); cv.drawPath(path, add)
+                          if (q == 1) { p.style = Paint.Style.STROKE; p.strokeWidth = 1.2f * d; p.color = Color.WHITE; p.alpha = 230; cv.drawPath(path, p) }
+                      }
+                  }
+                  p.style = Paint.Style.STROKE; p.strokeWidth = 11 * d; p.color = acc; p.alpha = 64; cv.drawLine(x0, m, px, m, p)
+                  p.strokeWidth = 5 * d; p.alpha = 255; cv.drawLine(x0, m, px, m, p)
+                  p.style = Paint.Style.FILL; p.color = acc; p.alpha = 80; cv.drawCircle(px, m, 14 * d, p)
+                  p.color = Color.WHITE; p.alpha = 255; cv.drawCircle(px, m, 9 * d, p)
+                  p.color = acc; cv.drawCircle(px, m, 6 * d, p)
+
+                  p.color = Color.WHITE; p.alpha = 170; p.textSize = 11 * d
+                  p.textAlign = Paint.Align.LEFT; cv.drawText(fmt(pos), x0, m + 26 * d, p)
+                  p.textAlign = Paint.Align.RIGHT; cv.drawText(fmt(Hub.dur), x1, m + 26 * d, p)
+
+                  // ---- أزرار التحكم ----
+                  val cy = m + 64 * d
+                  for (i in 0..3) {
+                      val cx = x0 + 26 * d + i * (w - 2 * pad - 52 * d) / 3
+                      btn[i].set(cx - 26 * d, cy - 26 * d, cx + 26 * d, cy + 26 * d)
+                      if (i in 1..3) { p.style = Paint.Style.FILL; p.color = Color.WHITE; p.alpha = 36; cv.drawCircle(cx, cy, (if (i == 2) 24 else 21) * d, p) }
+                      icon(cv, i, cx, cy, acc)
+                  }
+                  if (Hub.playing || Hub.title.isEmpty() || drag >= 0) postInvalidateOnAnimation()
+              }
+
+              private fun tri(cv: Canvas, ax: Float, ay: Float, bx: Float, by: Float, cx: Float, cy: Float) {
+                  path.reset(); path.moveTo(ax, ay); path.lineTo(bx, by); path.lineTo(cx, cy); path.close(); cv.drawPath(path, p)
+              }
+
+              private fun icon(cv: Canvas, k: Int, x: Float, y: Float, acc: Int) {
+                  p.style = Paint.Style.FILL; p.color = Color.WHITE; p.alpha = 255
+                  when (k) {
+                      0 -> { p.textAlign = Paint.Align.CENTER; p.textSize = 22 * d; if (liked) p.color = acc; cv.drawText(if (liked) "♥" else "♡", x, y + 8 * d, p) }
+                      1 -> { cv.drawRect(x - 9 * d, y - 7 * d, x - 7 * d, y + 7 * d, p); tri(cv, x + 8 * d, y - 7 * d, x - 5 * d, y, x + 8 * d, y + 7 * d) }
+                      2 -> if (Hub.playing) { cv.drawRect(x - 6 * d, y - 8 * d, x - 2 * d, y + 8 * d, p); cv.drawRect(x + 2 * d, y - 8 * d, x + 6 * d, y + 8 * d, p) }
+                           else tri(cv, x - 5 * d, y - 8 * d, x + 8 * d, y, x - 5 * d, y + 8 * d)
+                      3 -> { cv.drawRect(x + 7 * d, y - 7 * d, x + 9 * d, y + 7 * d, p); tri(cv, x - 8 * d, y - 7 * d, x + 5 * d, y, x - 8 * d, y + 7 * d) }
+                      4 -> { p.style = Paint.Style.STROKE; p.strokeWidth = 2 * d; p.strokeCap = Paint.Cap.ROUND
+                          cv.drawLine(x - 6 * d, y - 6 * d, x + 6 * d, y + 6 * d, p); cv.drawLine(x + 6 * d, y - 6 * d, x - 6 * d, y + 6 * d, p) }
+                  }
+              }
+
+              /** كبسولة نشطة: الغلاف على جانب والأعمدة على الجانب الآخر، والمنتصف فارغ للكاميرا. */
+              private fun pill(cv: Canvas, w: Float, h: Float, acc: Int) {
+                  val gap = Prefs.gap * d
+                  val zone = max(20 * d, (w - gap) / 2f)
+                  val lc = zone / 2f; val rc = w - zone / 2f; val cy = h / 2
+                  val note = Hub.note
+                  if (note != null) {
+                      p.style = Paint.Style.FILL; p.color = acc; p.alpha = 80; cv.drawCircle(lc, cy, 9 * d, p)
+                      p.alpha = 255; cv.drawCircle(lc, cy, 4.5f * d, p)
+                      p.color = Color.WHITE; p.alpha = 235; p.isFakeBoldText = true; p.textSize = 12 * d; p.textAlign = Paint.Align.CENTER
+                      val room = max(1f, zone - 14 * d); val tw0 = p.measureText(note)
+                      if (tw0 > room) p.textSize = max(1f, 12 * d * room / tw0)
+                      cv.drawText(note, rc, cy + p.textSize * 0.35f, p)
+                      p.isFakeBoldText = false
+                      return
+                  }
+                  val r = max(4 * d, h / 2 - 5 * d)
+                  val b = Hub.cover
+                  if (b != null) {
+                      val sq = min(b.width, b.height)
+                      cv.save(); path.reset(); path.addCircle(lc, cy, r, Path.Direction.CW); cv.clipPath(path)
+                      cv.drawBitmap(b, Rect((b.width - sq) / 2, (b.height - sq) / 2, (b.width + sq) / 2, (b.height + sq) / 2), RectF(lc - r, cy - r, lc + r, cy + r), null)
+                      cv.restore()
+                  } else { p.style = Paint.Style.FILL; p.color = acc; p.alpha = 255; cv.drawCircle(lc, cy, r, p) }
+                  p.style = Paint.Style.FILL; p.color = acc; p.alpha = 255
+                  for (k in 0..3) {
+                      val bh = 4 * d + max(2f, h - 16 * d) * B[k * 2]; val bx = rc + (k - 1.5f) * 6 * d
+                      cv.drawRoundRect(bx - 1.5f * d, cy - bh / 2, bx + 1.5f * d, cy + bh / 2, 2 * d, 2 * d, p)
+                  }
+              }
+
+              override fun onTouchEvent(e: MotionEvent): Boolean {
+                  if (!expanded) {
+                      when (e.action) {
+                          MotionEvent.ACTION_DOWN -> {
+                              pulse = SystemClock.uptimeMillis(); onPress?.invoke(); invalidate()
+                              if (Prefs.diag) android.widget.Toast.makeText(context, "TOS Island 3.2 · لمسة ✓", android.widget.Toast.LENGTH_SHORT).show()
+                          }
+                          MotionEvent.ACTION_UP -> { onRelease?.invoke(); onExpand?.invoke() }
+                          MotionEvent.ACTION_CANCEL -> onRelease?.invoke()
+                      }
+                      return true
+                  }
+                  val x0 = 18 * d; val x1 = width - 18 * d
+                  when (e.action) {
+                      MotionEvent.ACTION_DOWN -> if (abs(e.y - ((Prefs.idleH + 4) * d + 76 * d)) < 22 * d && Hub.dur > 0) {
+                          drag = ((e.x - x0) / (x1 - x0)).coerceIn(0f, 1f); parent.requestDisallowInterceptTouchEvent(true) }
+                      MotionEvent.ACTION_MOVE -> if (drag >= 0) drag = ((e.x - x0) / (x1 - x0)).coerceIn(0f, 1f)
+                      MotionEvent.ACTION_UP -> {
+                          if (drag >= 0) { Hub.controller?.transportControls?.seekTo((drag * Hub.dur).toLong()); Hub.pos = (drag * Hub.dur).toLong(); Hub.stamp = SystemClock.elapsedRealtime(); drag = -1f }
+                          else { val i = btn.indexOfFirst { it.contains(e.x, e.y) }; val tc = Hub.controller?.transportControls
+                              when (i) { 0 -> liked = !liked; 1 -> tc?.skipToPrevious(); 2 -> if (Hub.playing) tc?.pause() else tc?.play(); 3 -> tc?.skipToNext(); 4 -> onCollapse?.invoke() } }
+                      }
+                  }
+                  invalidate(); return true
+              }
+          }
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/java/com/tos/island/NotifService.kt')"
+          cat > 'TOSIsland/app/src/main/java/com/tos/island/NotifService.kt' <<'TOSEOF'
+          package com.tos.island
+
+          import android.app.Notification
+          import android.content.ComponentName
+          import android.media.MediaMetadata
+          import android.media.session.MediaController
+          import android.media.session.MediaSessionManager
+          import android.media.session.PlaybackState
+          import android.os.SystemClock
+          import android.service.notification.NotificationListenerService
+          import android.service.notification.StatusBarNotification
+
+          class NotifService : NotificationListenerService() {
+              private val cb = object : MediaController.Callback() {
+                  override fun onMetadataChanged(m: MediaMetadata?) = refresh()
+                  override fun onPlaybackStateChanged(s: PlaybackState?) = refresh()
+              }
+
+              override fun onListenerConnected() {
+                  val msm = getSystemService(MediaSessionManager::class.java)
+                  val cn = ComponentName(this, NotifService::class.java)
+                  msm.addOnActiveSessionsChangedListener({ pick(it) }, cn)
+                  pick(msm.getActiveSessions(cn))
+              }
+
+              private fun pick(l: List<MediaController>?) {
+                  val c = l?.firstOrNull { it.playbackState?.state == PlaybackState.STATE_PLAYING } ?: l?.firstOrNull()
+                  Hub.controller?.unregisterCallback(cb)
+                  Hub.controller = c
+                  c?.registerCallback(cb)
+                  refresh()
+              }
+
+              private fun refresh() {
+                  val c = Hub.controller; val m = c?.metadata; val st = c?.playbackState
+                  Hub.title = m?.getString(MediaMetadata.METADATA_KEY_TITLE) ?: ""
+                  Hub.artist = m?.getString(MediaMetadata.METADATA_KEY_ARTIST) ?: ""
+                  Hub.updateCover(m?.getBitmap(MediaMetadata.METADATA_KEY_ART) ?: m?.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART))
+                  Hub.dur = m?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: 0L
+                  Hub.playing = st?.state == PlaybackState.STATE_PLAYING
+                  Hub.pos = st?.position ?: 0L
+                  Hub.stamp = SystemClock.elapsedRealtime()
+                  Hub.onChange?.invoke()
+              }
+
+              override fun onNotificationPosted(sbn: StatusBarNotification) {
+                  if (sbn.packageName == packageName) return
+                  val n = sbn.notification
+                  val a = n.actions?.firstOrNull { it.remoteInputs?.isNotEmpty() == true } ?: return
+                  val title = n.extras.getCharSequence(Notification.EXTRA_TITLE)?.toString() ?: return
+                  val text = n.extras.getCharSequence(Notification.EXTRA_TEXT)?.toString() ?: ""
+                  Hub.chat = Hub.Msg(title, text, a, sbn.key)
+                  Hub.onChange?.invoke()
+              }
+          }
+          TOSEOF
+          mkdir -p "$(dirname 'TOSIsland/app/src/main/java/com/tos/island/Prefs.kt')"
+          cat > 'TOSIsland/app/src/main/java/com/tos/island/Prefs.kt' <<'TOSEOF'
+          package com.tos.island
+
+          import android.content.Context
+          import android.content.SharedPreferences
+
+          /** إعدادات الجزيرة: تُحفظ على الجهاز وتُطبَّق مباشرة. كل القيم بوحدة dp. */
+          object Prefs {
+              private var sp: SharedPreferences? = null
+
+              fun init(c: Context) {
+                  if (sp == null) sp = c.applicationContext.getSharedPreferences("tos_island", Context.MODE_PRIVATE)
+              }
+
+              private fun gi(k: String, def: Int): Int = sp?.getInt(k, def) ?: def
+              private fun gb(k: String, def: Boolean): Boolean = sp?.getBoolean(k, def) ?: def
+              private fun pi(k: String, v: Int) { sp?.edit()?.putInt(k, v)?.apply() }
+              private fun pb(k: String, v: Boolean) { sp?.edit()?.putBoolean(k, v)?.apply() }
+
+              /** عرض الكبسولة وهي ساكنة (حجم النوتش). */
+              var idleW: Int
+                  get() = gi("idleW", 124)
+                  set(v) { pi("idleW", v) }
+              /** ارتفاع الكبسولة. */
+              var idleH: Int
+                  get() = gi("idleH", 30)
+                  set(v) { pi("idleH", v) }
+              /** المسافة من أعلى الشاشة. */
+              var top: Int
+                  get() = gi("top", 4)
+                  set(v) { pi("top", v) }
+              /** إزاحة أفقية عن منتصف الشاشة. */
+              var xoff: Int
+                  get() = gi("xoff", 0)
+                  set(v) { pi("xoff", v) }
+              /** عرض المنطقة الفارغة في المنتصف (مكان الكاميرا). */
+              var gap: Int
+                  get() = gi("gap", 40)
+                  set(v) { pi("gap", v) }
+              /** عرض اللوحة الموسّعة. */
+              var expW: Int
+                  get() = gi("expW", 340)
+                  set(v) { pi("expW", v) }
+              /** استدارة زوايا اللوحة الموسّعة. */
+              var radius: Int
+                  get() = gi("radius", 26)
+                  set(v) { pi("radius", v) }
+              /** إبقاء الكبسولة ظاهرة دائمًا. */
+              var always: Boolean
+                  get() = gb("always", true)
+                  set(v) { pb("always", v) }
+              /** ألوان متحركة على الكبسولة وقت السكون. */
+              /** رسالة تشخيص صغيرة عند لمس الجزيرة (للتأكد أن اللمس يصل). */
+              var diag: Boolean
+                  get() = gb("diag", true)
+                  set(v) { pb("diag", v) }
+              var idleAnim: Boolean
+                  get() = gb("idleAnim", true)
+                  set(v) { pb("idleAnim", v) }
+              /** تشغيل تلقائي بعد إعادة تشغيل الهاتف. */
+              var auto: Boolean
+                  get() = gb("auto", true)
+                  set(v) { pb("auto", v) }
+              /** لون التمييز: 0 = تلقائي من غلاف الأغنية. */
+              var accent: Int
+                  get() = gi("accent", 0)
+                  set(v) { pi("accent", v) }
+
+              fun reset() { sp?.edit()?.clear()?.apply() }
+          }
+          TOSEOF
           P=TOSIsland/app/src/main/res/drawable-nodpi/ic_fg.png
           if [ ! -f "$P" ]; then
             mkdir -p "$(dirname "$P")"
@@ -391,7 +1365,6 @@ jobs:
           fi
           find TOSIsland -type f | sort
           grep -n "versionName" TOSIsland/app/build.gradle.kts
-          ls TOSIsland/app/src/main/java/com/tos/island
 
       - uses: actions/setup-java@v5
         with:
